@@ -22,6 +22,7 @@ PIPE = 'gallery/sprites/pipe.png'
 
 def welcomeScreen():
     #shows welcome screen:
+
     playerx = int(SCREENWIDTH/5)
     playery = int((SCREENHEIGHT - GAME_SPRITES['player'].get_height())/2)
     messagex = int(SCREENWIDTH-GAME_SPRITES['message'].get_width())/2
@@ -59,12 +60,12 @@ def mainGame():
     newPipe1 = getRandomPipe()
     newPipe2 = getRandomPipe()
 
-    #upper pipe list
+    #upper pipes list
     upperPipes = [
-        {'x': SCREENWIDTH+200 , 'y': newPipe1[0]['y']},
-        {'x': SCREENWIDTH+200+(SCREENWIDTH/2) , 'y': newPipe2[0]['y']}
+        {'x': SCREENWIDTH+200 , 'y':newPipe1[0]['y']},
+        {'x': SCREENWIDTH+200+(SCREENWIDTH/2) , 'y':newPipe2[0]['y']}
     ]
-    #list of lower pipe
+    #list of lower pipes
     lowerPipes = [
         {'x': SCREENWIDTH+200 , 'y': newPipe1[1]['y']},
         {'x': SCREENWIDTH+200+(SCREENWIDTH/2) , 'y': newPipe2[1]['y']}
@@ -164,10 +165,10 @@ def mainGame():
             FPSCLOCK.tick(FPS)
 
 def isCollide(playerx, playery, upperPipes, lowerPipes):
-    if playery > GROUNDY-25 or playery < 0:
+    if playery> GROUNDY - 25  or playery<0:
         GAME_SOUNDS['hit'].play()
         return True
-
+    
     for pipe in upperPipes:
         pipeHeight = GAME_SPRITES['pipe'][0].get_height()
         if(playery < pipeHeight + pipe['y'] and abs(playerx - pipe['x']) < GAME_SPRITES['pipe'][0].get_width()):
