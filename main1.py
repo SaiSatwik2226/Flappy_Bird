@@ -2,6 +2,8 @@ import random # For generating random numbers
 import sys # We will use sys.exit to exit the program
 import pygame
 from pygame.locals import * # Basic pygame imports
+from time import sleep
+
 
 # Global Variables for the game
 FPS = 32
@@ -89,6 +91,22 @@ def mainGame():
 
         crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) # This function will return true if the player is crashed
         if crashTest:
+            myDigits = [int(x) for x in list(str(score))]
+            width = 0
+            for digit in myDigits:
+                width += GAME_SPRITES['numbers'][digit].get_width()
+            Xoffset = (SCREENWIDTH - width)/2
+
+            SCREEN.blit(GAME_SPRITES['score'], ((SCREENWIDTH - GAME_SPRITES['score'].get_width())/2, SCREENHEIGHT*0.12))
+            screen_height = SCREENHEIGHT*0.12 + GAME_SPRITES['score'].get_height()
+
+            for digit in myDigits:
+                SCREEN.blit(GAME_SPRITES['numbers'][digit], (Xoffset, screen_height))
+                Xoffset += GAME_SPRITES['numbers'][digit].get_width()
+            
+            pygame.quit()
+            sys.exit()
+            sleep(5)
             return     
 
         #check for score
@@ -201,6 +219,7 @@ if __name__ == "__main__":
         pygame.image.load('gallery/sprites/9.png').convert_alpha(),
     )
 
+    GAME_SPRITES['score'] =pygame.image.load('gallery/sprites/score.png').convert_alpha()
     GAME_SPRITES['message'] =pygame.image.load('gallery/sprites/message.png').convert_alpha()
     GAME_SPRITES['base'] =pygame.image.load('gallery/sprites/base.png').convert_alpha()
     GAME_SPRITES['pipe'] =(pygame.transform.rotate(pygame.image.load( PIPE).convert_alpha(), 180), 
